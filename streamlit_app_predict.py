@@ -5,6 +5,7 @@ import os
 from PIL import Image
 import cv2
 import numpy as np
+import base64
 
 
 
@@ -40,6 +41,15 @@ def loadSegFormModel():
     #model = project.version(1).model
     model = project.version(4).model
     return model
+
+# Take in base64 string and return PIL image
+def stringToImage(base64_string):
+    imgdata = base64.b64decode(base64_string)
+    return Image.open(io.BytesIO(imgdata))
+
+# convert PIL Image to an RGB image( technically a numpy array ) that's compatible with opencv
+def toRGB(image):
+    return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
 	
 def segFormCrack(cl, x, y, w, h, cnf, saved_image):
     print(".....inside segFormCrack......")
@@ -58,13 +68,17 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image):
     preds = segform_model.predict("saved_ROI.jpg")
     print("segmentation results are ")
     seg_mask = preds[0]['segmentation_mask']
+	
     
 	
-    print(seg_mask)
+    print(seg_mask.shape)
     #seg_mask_read = cv2.imread(seg_mask, 0)
     #cv2.imwrite("seg_mask.jpg", seg_mask_read)
     #seg_img = Image.open("seg_mask.jpg")
-    st.image(seg_mask, caption='segmentation mask')
+    pil_image = stringToImage(seg_mask)
+    seg_mask_image = toRGB(pil_image)
+    
+    st.image(pil_image, caption='segmentation mask')
     
     preds = segform_model.predict("saved_ROI.jpg").save("crack_pred.jpg")
     crck_pred = Image.open('crack_pred.jpg')
