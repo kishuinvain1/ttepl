@@ -58,8 +58,14 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image):
     preds = segform_model.predict("saved_ROI.jpg")
     print("segmentation results are ")
     seg_mask = preds[0]['segmentation_mask']
+    
+	
     print(seg_mask)
-    cv2.imwrite("seg_mask.jpg", seg_mask)
+    seg_mask_read = cv2.imread(seg_mask, 0)
+    cv2.imwrite("seg_mask.jpg", seg_mask_read)
+    seg_img = Image.open("seg_mask.jpg")
+    st.image(seg_img, caption='segmentation mask')
+    
     preds = segform_model.predict("saved_ROI.jpg").save("crack_pred.jpg")
     crck_pred = Image.open('crack_pred.jpg')
     st.image(crck_pred, caption='crack localization')
