@@ -52,7 +52,7 @@ def stringToImage(base64_string):
 def toRGB(image):
     return np.array(image)
 	
-def segFormCrack(cl, x, y, w, h, cnf, saved_image):
+def segFormCrack(cl, x, y, w, h, cnf, saved_image, bias):
     print(".....inside segFormCrack......")
     img = cv2.imread(saved_image)
     img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
@@ -61,7 +61,6 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image):
     y = int(y)
     w = int(w)
     h = int(h)
-    bias = 0
     roi = img[y-h//2+bias:y+h//2-bias, x-w//2+bias:x+w//2-bias, :]
     #st.image(roi, caption="ROI")
     cv2.imwrite("saved_ROI.jpg", roi)
@@ -130,6 +129,7 @@ def predict(model, url):
 def main():
     st.title('Crack Detection Final')
     option = st.selectbox('Image Type',('Normal', 'Zoomed-in'))
+	
    
     #Model api for fleet-crack trained on 25_03_23	
     #rf = Roboflow(api_key="SNxIPCnRCYWXUM9lBAp4")
@@ -137,6 +137,7 @@ def main():
     #model = project.version(1).model
      
     image, svd_img = load_image()
+    zoomin_bias = st.number_input('Zoomin Bias')
     #st.write('Enter the image URL')
     #url = st.text_input('URL', '')
     result = st.button('Predict')
@@ -186,7 +187,7 @@ def main():
             #st.write(cl)
             #st.write(cnf)
             if(cl == "Non-Broken"):
-                sem_seg_res = segFormCrack(cl, x, y, w, h, cnf, "main_image.jpg")
+                sem_seg_res = segFormCrack(cl, x, y, w, h, cnf, "main_image.jpg",zoomin_bias)
 
     elif(result and option == "Zoomed-in"):
         st.write('Calculating results...')
