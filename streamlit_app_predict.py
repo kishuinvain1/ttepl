@@ -85,15 +85,19 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image):
     print("non-zero is......................................")
     print(nz_cmp)
     
+        
 
     #pil_image = stringToImage(seg_mask)
     #seg_mask_image = toRGB(pil_image)
     
-    st.image(seg_mask_image, caption='segmentation mask')
+    #st.image(seg_mask_image, caption='segmentation mask')
     
     preds = segform_model.predict("saved_ROI.jpg").save("crack_pred.jpg")
-    crck_pred = Image.open('crack_pred.jpg')
-    st.image(crck_pred, caption='crack localization')
+    if(nz_cmp > 10):
+        crck_pred = Image.open('crack_pred.jpg')
+        st.image(crck_pred, caption='crack localization')
+    else:
+        st.write("No Crack Detected")
 	
 def drawBoundingBox(saved_image ,x, y, w, h, cl, cf):
     #img = Image.open(saved_image)
