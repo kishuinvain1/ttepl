@@ -135,7 +135,7 @@ def main():
             h = results['predictions'][0]['height']
             cl = results['predictions'][0]['class']
             cnf = results['predictions'][0]['confidence']
-            if(cl == "Broken" and cnf < 0.75):
+            if(cl == "Broken" and cnf < 0.8):
                 cl = "Non-Broken"
             print("printing saved image")
             #print(svd_img.name)
