@@ -213,7 +213,7 @@ def main():
             preds = segform_model.predict("main_image.jpg").save("crack_pred.jpg")
             crck_pred = Image.open('crack_pred.jpg')
             st.image(crck_pred, caption='crack localization')
-	else:
+        else:
             st.write("No Cracks Detected")
         
   	
