@@ -191,7 +191,7 @@ def main():
     elif(result and option == "Zoomed-in"):
         st.write('Calculating results...')
         segform_model = loadSegFormModel()
-	preds = segform_model.predict("main_image.jpg")
+        preds = segform_model.predict("main_image.jpg")
         seg_mask = preds[0]['segmentation_mask']
 	
     
