@@ -52,7 +52,9 @@ def stringToImage(base64_string):
 def toRGB(image):
     return np.array(image)
 	
-def segFormCrack(cl, x, y, w, h, cnf, saved_image, bias):
+def segFormCrack(cl, x, y, w, h, cnf, saved_image):
+    bias = 0
+
     print(".....inside segFormCrack......")
     img = cv2.imread(saved_image)
     img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
@@ -63,7 +65,7 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image, bias):
     h = int(h)
     bias = int(bias)
     roi = img[y-h//2+bias:y+h//2-bias, x-w//2+bias:x+w//2-bias, :]
-    st.image(roi, caption="ROI")
+    #st.image(roi, caption="ROI")
     cv2.imwrite("saved_ROI.jpg", roi)
     segform_model = loadSegFormModel()
     preds = segform_model.predict("saved_ROI.jpg")
@@ -138,7 +140,7 @@ def main():
     #model = project.version(1).model
      
     image, svd_img = load_image()
-    zoomin_bias = st.number_input('Zoomin Bias')
+    #zoomin_bias = st.number_input('Zoomin Bias')
     #st.write('Enter the image URL')
     #url = st.text_input('URL', '')
     result = st.button('Predict')
@@ -188,7 +190,7 @@ def main():
             #st.write(cl)
             #st.write(cnf)
             if(cl == "Non-Broken"):
-                sem_seg_res = segFormCrack(cl, x, y, w, h, cnf, "main_image.jpg",zoomin_bias)
+                sem_seg_res = segFormCrack(cl, x, y, w, h, cnf, "main_image.jpg")
 
     elif(result and option == "Zoomed-in"):
         st.write('Calculating results...')
