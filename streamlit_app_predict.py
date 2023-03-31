@@ -61,6 +61,7 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image, bias):
     y = int(y)
     w = int(w)
     h = int(h)
+    bias = int(bias)
     roi = img[y-h//2+bias:y+h//2-bias, x-w//2+bias:x+w//2-bias, :]
     #st.image(roi, caption="ROI")
     cv2.imwrite("saved_ROI.jpg", roi)
