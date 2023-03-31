@@ -111,8 +111,15 @@ def main():
         #project3 = rf3.workspace().project("fleetguardobjdet")
         #model3 = project3.version(1).model
 	
+	#Model api for FleetGuard trained on 31_03_23 with 2 classes (broken/non-broken)
+        rf4 = Roboflow(api_key="q3ZrI4IarL2A3pHuOrt2")
+        project4 = rf4.workspace().project("fleetguardobjdet3")
+        model4 = project4.version(4).model
 	
-        results = predict(model2, svd_img)
+	
+	
+	
+        results = predict(model4, svd_img)
         #results = predict(model2, url)
         print("Prediction Results are...")	
         print(results)
@@ -128,6 +135,8 @@ def main():
             h = results['predictions'][0]['height']
             cl = results['predictions'][0]['class']
             cnf = results['predictions'][0]['confidence']
+            if(cl == "Broken" and cnf < 0.75):
+                cl = "Non-Broken"
             print("printing saved image")
             #print(svd_img.name)
 	
@@ -135,7 +144,7 @@ def main():
             drawBoundingBox(svd_img,x, y, w, h, cl, cnf)
             #st.write(cl)
             #st.write(cnf)
-            if(cl == "Crack" or cl == "No-Crack"):
+            if(cl == "Non-Broken"):
                 sem_seg_res = segFormCrack(cl, x, y, w, h, cnf, "main_image.jpg")
 
     elif(result and option == "Zoomed-in"):
