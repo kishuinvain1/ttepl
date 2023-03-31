@@ -78,8 +78,13 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image):
     #seg_img = Image.open("seg_mask.jpg")
     im_bytes = base64.b64decode(seg_mask)
     im_arr = np.frombuffer(im_bytes, dtype=np.uint8)  # im_arr is one-dim Numpy array
+    
     seg_mask_image = cv2.imdecode(im_arr, 0)
     print(seg_mask_image)
+    nz_cmp = np.sum(seg_mask_image)
+    print("non-zero is......................................")
+    print(nz_cmp)
+    
 
     #pil_image = stringToImage(seg_mask)
     #seg_mask_image = toRGB(pil_image)
