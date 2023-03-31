@@ -71,7 +71,7 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image):
 	
     
 	
-    print(seg_mask.shape)
+    print(seg_mask)
     #seg_mask_read = cv2.imread(seg_mask, 0)
     #cv2.imwrite("seg_mask.jpg", seg_mask_read)
     #seg_img = Image.open("seg_mask.jpg")
