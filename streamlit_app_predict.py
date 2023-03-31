@@ -92,8 +92,9 @@ def segFormCrack(cl, x, y, w, h, cnf, saved_image):
     
     #st.image(seg_mask_image, caption='segmentation mask')
     
-    preds = segform_model.predict("saved_ROI.jpg").save("crack_pred.jpg")
+    
     if(nz_cmp > 10):
+        preds = segform_model.predict("saved_ROI.jpg").save("crack_pred.jpg")
         crck_pred = Image.open('crack_pred.jpg')
         st.image(crck_pred, caption='crack localization')
     else:
@@ -190,9 +191,30 @@ def main():
     elif(result and option == "Zoomed-in"):
         st.write('Calculating results...')
         segform_model = loadSegFormModel()
-        preds = segform_model.predict("main_image.jpg").save("crack_pred.jpg")
-        crck_pred = Image.open('crack_pred.jpg')
-        st.image(crck_pred, caption='crack localization')
+	preds = segform_model.predict("main_image.jpg")
+        seg_mask = preds[0]['segmentation_mask']
+	
+    
+	
+        print(seg_mask)
+        #seg_mask_read = cv2.imread(seg_mask, 0)
+        #cv2.imwrite("seg_mask.jpg", seg_mask_read)
+        #seg_img = Image.open("seg_mask.jpg")
+        im_bytes = base64.b64decode(seg_mask)
+        im_arr = np.frombuffer(im_bytes, dtype=np.uint8)  # im_arr is one-dim Numpy array
+    
+        seg_mask_image = cv2.imdecode(im_arr, 0)
+        #print(seg_mask_image)
+        nz_cmp = np.sum(seg_mask_image)
+        print("non-zero is......................................")
+        print(nz_cmp)
+        if(nz_cmp > 10):
+		
+            preds = segform_model.predict("main_image.jpg").save("crack_pred.jpg")
+            crck_pred = Image.open('crack_pred.jpg')
+            st.image(crck_pred, caption='crack localization')
+	else:
+            st.write("No Cracks Detected")
         
   	
                   
