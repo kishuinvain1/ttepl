@@ -146,9 +146,9 @@ def main():
     if(result and option == "Normal"):
         st.write('Calculating results...')
         #Model api for FleetGuard trained on 27_03_23
-        rf2 = Roboflow(api_key="uhDFc9G6MKjrEvbfHt6B")
-        project2 = rf2.workspace().project("fleetguard")
-        model2 = project2.version(1).model
+        #rf2 = Roboflow(api_key="uhDFc9G6MKjrEvbfHt6B")
+        #project2 = rf2.workspace().project("fleetguard")
+        #model2 = project2.version(1).model
 	
         #Model api for FleetGuard trained on 31_03_23
         #rf3 = Roboflow(api_key="pAMgIogxlcl3zF1xSCsE")
