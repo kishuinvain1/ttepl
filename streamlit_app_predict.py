@@ -94,7 +94,7 @@ def main():
 
             st.write('Results:')
             if "front" in cl:    
-                st.write('Front Wheel')
+                st.write('Front Wheel :red[colored red], **:blue[colored]')
             else:
                 st.write('Rear Wheel')  
 
@@ -107,7 +107,7 @@ def main():
                 st.write('Inner Screws')  
             else:
                 st.write('Outer Screws') 
-                             
+
             drawBoundingBox(svd_img,x, y, w, h, cl, cnf)
            
 
