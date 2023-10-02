@@ -76,7 +76,6 @@ def main():
 
     result = st.button('Detect')
     if result:
-        st.write('Calculating results...')	
         results = predict(model, svd_img)
         #results = predict(model2, url)
         print("Prediction Results are...")	
@@ -92,6 +91,23 @@ def main():
             h = results['predictions'][0]['height']
             cl = results['predictions'][0]['class']
             cnf = results['predictions'][0]['confidence']
+
+            st.write('Results:')
+            if "front" in cl:    
+                st.write('Front Wheel')
+            else:
+                st.write('Rear Wheel')  
+
+            if "alloy" in cl:
+                st.write('Alloy Type')
+            else:
+                st.write('Spokes Type')  
+
+            if "inner" in cl:
+                st.write('Inner Screws')  
+            else:
+                st.write('Outer Screws') 
+                             
             drawBoundingBox(svd_img,x, y, w, h, cl, cnf)
            
 
