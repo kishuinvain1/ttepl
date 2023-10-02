@@ -82,7 +82,7 @@ def main():
         print(results)
         if len(results['predictions']) == 0:
             st.image(svd_img)
-            st.write("No object is detected")
+            st.write("No Tyre Detected")
         else:
             new_img_pth = results['predictions'][0]['image_path']
             x = results['predictions'][0]['x']
@@ -92,21 +92,21 @@ def main():
             cl = results['predictions'][0]['class']
             cnf = results['predictions'][0]['confidence']
 
-            st.write('Results:')
+            st.write('DETECTION RESULTS')
             if "front" in cl:    
-                st.markdown('Front Wheel :red[colored red], **:blue[colored]')
+                st.write('* Front Wheel')
             else:
-                st.write('Rear Wheel')  
+                st.write('* Rear Wheel')  
 
             if "alloy" in cl:
-                st.write('Alloy Type')
+                st.write('* Alloy Type')
             else:
-                st.write('Spokes Type')  
+                st.write('* Spokes Type')  
 
             if "inner" in cl:
-                st.write('Inner Screws')  
+                st.write('* Inner Screws')  
             else:
-                st.write('Outer Screws') 
+                st.write('* Outer Screws') 
 
             drawBoundingBox(svd_img,x, y, w, h, cl, cnf)
            
