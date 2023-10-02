@@ -94,7 +94,7 @@ def main():
 
             st.write('Results:')
             if "front" in cl:    
-                st.write('Front Wheel :red[colored red], **:blue[colored]')
+                st.markdown('Front Wheel :red[colored red], **:blue[colored]')
             else:
                 st.write('Rear Wheel')  
 
