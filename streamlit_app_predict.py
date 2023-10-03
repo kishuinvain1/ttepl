@@ -56,7 +56,7 @@ def drawBoundingBox(saved_image ,x, y, w, h, cl, cf):
     txt_start_pnt = (x-w//2, y-h//2-15)
     
     img = cv2.rectangle(img, start_pnt, end_pnt, (0,255,0), 10)
-    img = cv2.putText(img, cl, txt_start_pnt, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 3, cv2.LINE_AA)	
+    img = cv2.putText(img, "KTM-200", txt_start_pnt, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 3, cv2.LINE_AA)	
     st.image(img, caption='Resulting Image')	
     
 
@@ -93,20 +93,21 @@ def main():
             cnf = results['predictions'][0]['confidence']
 
             st.write('DETECTION RESULTS')
+            st.write('* Model: KTM-200')
             if "front" in cl:    
                 st.write('* Front Wheel')
             else:
                 st.write('* Rear Wheel')  
 
             if "alloy" in cl:
-                st.write('* Alloy Type')
+                st.write('* Front Disc')
             else:
-                st.write('* Spokes Type')  
+                st.write('* Rear Disc')  
 
             if "inner" in cl:
-                st.write('* Inner Screws')  
+                st.write('* 6 Inner Clip Bolts')  
             else:
-                st.write('* Outer Screws') 
+                st.write('* 5 Inner Clip Bolts') 
 
             drawBoundingBox(svd_img,x, y, w, h, cl, cnf)
            
