@@ -62,7 +62,7 @@ def drawBoundingBox(saved_image ,x, y, w, h, cl, cf):
         cl = 'front_wheel-front_disc-5_innerclip_bolts'       
     
     img = cv2.rectangle(img, start_pnt, end_pnt, (0,255,0), 10)
-    img = cv2.putText(img, "KTM200-"+cl, txt_start_pnt, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 165), 2, cv2.LINE_AA)	
+    img = cv2.putText(img, "KTM200-"+cl, txt_start_pnt, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 1, cv2.LINE_AA)	
     st.image(img, caption='Resulting Image')	
     
 
