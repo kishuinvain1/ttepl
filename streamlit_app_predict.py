@@ -105,9 +105,9 @@ def main():
                 st.write('* Rear Disc')  
 
             if "inner" in cl:
-                st.write('* 6 Inner Clip Bolts')  
+                st.write('* 5 Inner Clip Bolts')  
             else:
-                st.write('* 5 Inner Clip Bolts') 
+                st.write('* 6 Inner Clip Bolts') 
 
             drawBoundingBox(svd_img,x, y, w, h, cl, cnf)
            
