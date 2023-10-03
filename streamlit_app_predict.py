@@ -54,7 +54,7 @@ def drawBoundingBox(saved_image ,x, y, w, h, cl, cf):
     start_pnt = (x-w//2,y-h//2)
     end_pnt = (x+w//2, y+h//2)
     txt_start_pnt = (x-w//2, y-h//2-15)
-    if cl == 'front-alloy-outer:
+    if cl == 'front-alloy-outer':
         cl = 'front_wheel-front_disc-6_innerclip_bolts'
     elif cl == 'rear-spokes-inner':
         cl = 'rear_wheel-rear_disc-5_innerclip_bolts' 
