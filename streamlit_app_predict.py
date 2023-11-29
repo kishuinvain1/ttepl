@@ -118,7 +118,7 @@ def main():
 
             st.write('DETECTION RESULTS')
             
-            for i in range (len(det_results)):
+            for i in range (len(det_results['predictions'])):
                 
                 x_d = int(det_results['predictions'][i]['x'])
                 y_d = int(det_results['predictions'][i]['y'])
