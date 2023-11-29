@@ -113,7 +113,7 @@ def main():
 
             det_results = predict(model_digit, patch)
 
-            st.write(det_results)
+            #st.write(det_results)
 
 
             st.write('DETECTION RESULTS')
