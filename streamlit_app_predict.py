@@ -109,10 +109,13 @@ def main():
 
             det_results = predict(model_digit, patch)
 
+            st.write(det_results)
+
 
             st.write('DETECTION RESULTS')
             
             for i in range (len(det_results)):
+                
                 x_d = int(det_results['predictions'][i]['x'])
                 y_d = int(det_results['predictions'][i]['y'])
                 w_d = int(det_results['predictions'][i]['width'])
