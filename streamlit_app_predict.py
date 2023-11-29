@@ -107,7 +107,7 @@ def main():
             img = cv2.imread("main_image.jpg")
             patch = img[y-h//2:y+h//2, x-w//2:x+w//2, :]
 
-            st.image(img, caption="patch")
+            st.image(patch, caption="patch")
 
             det_results = predict(model_digit, patch)
 
