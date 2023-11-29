@@ -63,7 +63,9 @@ def drawBoundingBox(saved_image ,x, y, w, h, cl, cf):
     
     img = cv2.rectangle(img, start_pnt, end_pnt, (0,255,0), 10)
     img = cv2.putText(img, "KTM200-"+cl, txt_start_pnt, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 1, cv2.LINE_AA)	
-    st.image(img, caption='Resulting Image')	
+    #st.image(img, caption='Resulting Image')	
+
+    return img
     
 
 
@@ -73,16 +75,20 @@ def predict(model, url):
 	
 	
 def main():
-    st.title('Tyre Classification')
-    rf = Roboflow(api_key="iYDj3AF1byBTN6qkTYwP")
-    project = rf.workspace().project("tyre-classification")
-    model = project.version(3).model
-     
+    st.title('TTEPL')
+
+    rf = Roboflow(api_key="FFCwPN6Fvmme9mTdGDLj")
+    project_roi = rf.workspace().project("ttepl")
+    model_roi = project_roi.version(1).model
+
+    project_digit = rf.workspace().project("ttepl-digit")
+    model_digit = project_digit.version(1).model
+
     image, svd_img = load_image()
 
     result = st.button('Detect')
     if result:
-        results = predict(model, svd_img)
+        results = predict(model_roi, svd_img)
         #results = predict(model2, url)
         print("Prediction Results are...")	
         print(results)
@@ -91,31 +97,33 @@ def main():
             st.write("No Tyre Detected")
         else:
             new_img_pth = results['predictions'][0]['image_path']
-            x = results['predictions'][0]['x']
-            y = results['predictions'][0]['y']
-            w = results['predictions'][0]['width']
-            h = results['predictions'][0]['height']
+            x = int(results['predictions'][0]['x'])
+            y = int(results['predictions'][0]['y'])
+            w = int(results['predictions'][0]['width'])
+            h = int(results['predictions'][0]['height'])
             cl = results['predictions'][0]['class']
             cnf = results['predictions'][0]['confidence']
 
+            img = cv2.imread(new_img_pth)
+            patch = img[y-h//2:y+h//2, x-w//2:x+w//2, :]
+
+            det_results = predict(model_digit, patch)
+
+
             st.write('DETECTION RESULTS')
-            st.write('* Model: KTM-200')
-            if "front" in cl:    
-                st.write('* Front Wheel')
-            else:
-                st.write('* Rear Wheel')  
+            
+            for i in range (len(det_results)):
+                x_d = int(det_results['predictions'][i]['x'])
+                y_d = int(det_results['predictions'][i]['y'])
+                w_d = int(det_results['predictions'][i]['width'])
+                h_d = int(det_results['predictions'][i]['height'])
+                cl_d = det_results['predictions'][i]['class']
+                cnf_d = det_results['predictions'][i]['confidence']
 
-            if "alloy" in cl:
-                st.write('* Front Disc')
-            else:
-                st.write('* Rear Disc')  
+            
+                patch = drawBoundingBox(patch, x_d, y_d, w_d, h_d, cl_d, cnf_d)
 
-            if "inner" in cl:
-                st.write('* 5 Inner Clip Bolts')  
-            else:
-                st.write('* 6 Inner Clip Bolts') 
-
-            drawBoundingBox(svd_img,x, y, w, h, cl, cnf)
+            st.image(patch, caption="Resulting Image")    
            
 
 if __name__ == '__main__':
