@@ -104,7 +104,7 @@ def main():
             cl = results['predictions'][0]['class']
             cnf = results['predictions'][0]['confidence']
 
-            img = cv2.imread(new_img_pth)
+            img = cv2.imread("main_image.jpg")
             patch = img[y-h//2:y+h//2, x-w//2:x+w//2, :]
 
             det_results = predict(model_digit, patch)
