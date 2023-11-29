@@ -89,7 +89,7 @@ def main():
         print(results)
         if len(results['predictions']) == 0:
             st.image(svd_img)
-            st.write("No Tyre Detected")
+            st.write("No Object Detected")
         else:
             new_img_pth = results['predictions'][0]['image_path']
             x = int(results['predictions'][0]['x'])
@@ -104,7 +104,7 @@ def main():
 
             patch = cv2.rotate(patch, cv2.ROTATE_180)
 
-            st.image(patch, caption="ROI")
+            #st.image(patch, caption="ROI")
 
             det_results = predict(model_digit, patch)
 
