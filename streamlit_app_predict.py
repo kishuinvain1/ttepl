@@ -104,7 +104,7 @@ def main():
 
             patch = cv2.rotate(patch, cv2.ROTATE_180)
 
-            #st.image(patch, caption="ROI")
+            st.image(patch, caption="ROI")
 
             det_results = predict(model_digit, patch)
 
